@@ -1,0 +1,30 @@
+{
+  "name": "cypress_jenkins",
+  "version": "1.0.0",
+  "description": "E2E with Cypress",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "Cypress open",
+    "cy:run": "Cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuocBaoNguyen11295/cypress_jenkins.git"
+  },
+  "keywords": [
+    "e2e",
+    "cypress",
+    "js"
+  ],
+  "author": "Quoc Bao Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QuocBaoNguyen11295/cypress_jenkins/issues"
+  },
+  "homepage": "https://github.com/QuocBaoNguyen11295/cypress_jenkins#readme",
+  "dependencies": {
+    "cypress": "^10.7.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  }
+}
