@@ -11,6 +11,9 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
+Cypress.Commands.add('open_index_page', () => { 
+    cy.visit('http://zero.webappsecurity.com/')
+ })
 //
 //
 // -- This is a child command --
