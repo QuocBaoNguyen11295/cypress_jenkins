@@ -46,6 +46,27 @@ Cypress.Commands.add('open_index_page', () => {
  Cypress.Commands.add('check_error_message',()=>{
     cy.get('.alert-error').contains('Login and/or password are wrong.').should('be.visible')
  })
+
+ Cypress.Commands.add('click_on_forget_password',()=>{
+   cy.get('a').contains('Forgot your password ?').click()
+ })
+Cypress.Commands.add('check_forget_password_page',()=>{
+   cy.get('h3').should('have.text','Forgotten Password')
+   cy.get('h3').parent().parent().get('p').contains('So you forgot your password? Give us your email address and we will email it to you.').should('be.visible')
+})
+
+Cypress.Commands.add('fill_out_the_email',(email)=>{
+   cy.get('label').contains('Email').parent().get('input[name="email"]').type(email)
+})
+
+Cypress.Commands.add('click_on_send_password',()=>{
+   cy.get('input[value="Send Password"]').click()
+})
+
+Cypress.Commands.add('check_send_password_successfully',(email)=>{
+   cy.get('h3').should('have.text','Forgotten Password')
+   cy.get('.page-header').parent().contains(`Your password will be sent to the following email: `+email).should('be.visible')
+})
 //
 //
 // -- This is a child command --
