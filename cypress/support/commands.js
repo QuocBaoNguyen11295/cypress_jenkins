@@ -67,6 +67,12 @@ Cypress.Commands.add('check_send_password_successfully',(email)=>{
    cy.get('h3').should('have.text','Forgotten Password')
    cy.get('.page-header').parent().contains(`Your password will be sent to the following email: `+email).should('be.visible')
 })
+
+Cypress.Commands.add('login_to_the_page',(email,password)=>{
+   cy.click_on_signin_button()
+   cy.check_header_in_login_page()
+   cy.fill_out_account(email,password)
+})
 //
 //
 // -- This is a child command --
