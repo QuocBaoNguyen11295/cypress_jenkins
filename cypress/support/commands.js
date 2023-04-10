@@ -73,6 +73,45 @@ Cypress.Commands.add('login_to_the_page',(email,password)=>{
    cy.check_header_in_login_page()
    cy.fill_out_account(email,password)
 })
+//----------//
+Cypress.Commands.add('open_tab',(tab)=>{
+   cy.get('strong').contains(tab).click()
+})
+//----- Feedback -----//
+Cypress.Commands.add('check_feedback_page',()=>{
+   cy.get('h3').should('have.text','Feedback')
+   cy.get('#description > p').contains(`Our Frequently Asked Questions area will help you with many of your inquiries.`).should('be.visible')
+   cy.get('#description > p').contains(`If you can't find your question, return to this page and use the e-mail form below.`).should('be.visible')
+   cy.get('#description > p').parent().get('p').contains('IMPORTANT! This feedback facility is not secure. Please do not send any').should('be.visible')
+   cy.get('#description > p').parent().get('p').contains('account information in a message sent from here.').should('be.visible')
+})
+
+Cypress.Commands.add('fill_out_info_for_feedback',(name,email,subject,message)=>{
+   cy.get('input[placeholder="Your Name"]').type(name)
+   cy.get('input[placeholder="Your email address"]').type(email)
+   cy.get('input[placeholder="Subject"]').type(subject)
+   cy.get('textarea[placeholder="Type your questions here..."]').type(message)
+})
+
+Cypress.Commands.add('click_on_send_message',()=>{
+   cy.get('input[value="Send Message"]').click()
+})
+
+Cypress.Commands.add('check_the_feedback_sent',(name)=>{
+   cy.get('h3').contains('Feedback').should('be.visible')
+   cy.get('h3').parent().parent().contains(`Thank you for your comments, ${name}. They will be reviewed by our Customer Service staff and given the full attention that they deserve.`).should('be.visible')
+})
+
+Cypress.Commands.add('click_on_clear',()=>{
+   cy.get('input[value="Clear"]').click()
+})
+
+Cypress.Commands.add('check_empty_field_after_clearing',()=>{
+   cy.get('input[placeholder="Your Name"]').should('to.be.empty')
+   cy.get('input[placeholder="Your email address"]').should('to.be.empty')
+   cy.get('input[placeholder="Subject"]').should('to.be.empty')
+   cy.get('textarea[placeholder="Type your questions here..."]').should('to.be.empty')
+})
 //
 //
 // -- This is a child command --
