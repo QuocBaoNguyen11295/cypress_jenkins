@@ -10,6 +10,7 @@
 //
 //
 // -- This is a parent command --
+
 // Cypress.Commands.add('login', (email, password) => { ... })
 Cypress.Commands.add('open_index_page', () => { 
     cy.visit('http://zero.webappsecurity.com/')
@@ -112,6 +113,14 @@ Cypress.Commands.add('check_empty_field_after_clearing',()=>{
    cy.get('input[placeholder="Subject"]').should('to.be.empty')
    cy.get('textarea[placeholder="Type your questions here..."]').should('to.be.empty')
 })
+//----- Search keyword -----//
+Cypress.Commands.add('check_the_item_after_searching',(keyword)=>{
+   cy.get('input[name="searchTerm"]').type(keyword+'{enter}')
+   cy.get('.top_offset > ul > li > a').each(($a) => {
+      cy.get($a).should('contain.text',keyword)
+   })
+})
+
 //
 //
 // -- This is a child command --
