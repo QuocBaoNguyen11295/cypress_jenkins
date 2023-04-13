@@ -34,8 +34,8 @@ Cypress.Commands.add('open_index_page', () => {
     cy.get('input[value="Sign in"]').click()
  })
 
- Cypress.Commands.add('check_login_correctly',()=>{
-    cy.get('li').contains('username').should('be.visible')
+ Cypress.Commands.add('check_login_correctly',(username)=>{
+    cy.get('li').contains(username).should('be.visible')
  })
 
  Cypress.Commands.add('logout_page',()=>{
@@ -120,7 +120,32 @@ Cypress.Commands.add('check_the_item_after_searching',(keyword)=>{
       cy.get($a).should('contain.text',keyword)
    })
 })
+//----- Pay bills -----//
+Cypress.Commands.add('open_tab_online_banking',(tab_name)=>{
+   cy.get('h4 > span').contains(tab_name).click()
+})
 
+Cypress.Commands.add('check_online_banking_tab_is_active',(tab_name,item)=>{
+   cy.get('li.active > a').contains(tab_name).should('exist')
+   cy.get('#tabs > ul > li > a').contains(item).should('exist').click()
+})
+
+Cypress.Commands.add('fill_out_info_for_pay_saved_payee',(payee,account,amount,date,description)=>{
+   cy.get('select#sp_payee').select(payee)
+   cy.get('select#sp_account').select(account)
+   cy.get('#sp_amount').type(amount)
+   cy.get('#sp_date').type(date).tab()
+   cy.get('#sp_description').type(description)
+})
+
+Cypress.Commands.add('click_pay',()=>{
+   cy.get('input[value="Pay"]').click()
+})
+
+Cypress.Commands.add('check_message_for_paying_successfully',(amount,payee)=>{
+   cy.get('#alert_content > span').should('have.text','The payment was successfully submitted.')
+   cy.get('#alert_content > span').should('have.attr','title',`$ `+amount+` payed to payee `+payee.toLowerCase())
+})
 //
 //
 // -- This is a child command --
