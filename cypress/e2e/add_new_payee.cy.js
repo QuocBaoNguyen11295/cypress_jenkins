@@ -1,4 +1,4 @@
-describe('Pay Saved Payee',()=>{
+describe('Add new payee',()=>{
     beforeEach(()=>{
         cy.open_index_page()
         cy.click_on_signin_button()
@@ -12,10 +12,10 @@ describe('Pay Saved Payee',()=>{
         })
     })
 
-    it('Submit Pay Saved Payee',()=>{
-        cy.check_online_banking_tab_is_active('Pay Bills','Pay Saved Payee')
-        cy.fill_out_info_for_pay_saved_payee('Make payments to your saved payees','Apple','Loan',1000,'2023-04-24','Test')
-        cy.click_pay()
-        cy.check_message_for_paying_successfully(1000,'Apple')
+    it('Submit to add new payee',()=>{
+        cy.check_online_banking_tab_is_active('Pay Bills','Add New Payee')
+        cy.fill_out_info_for_add_new_payee('Who are you paying?','Payee test','Payee address','Payee account','Payee details')
+        cy.click_on_add()
+        cy.check_message_for_adding_new_payee_successfully('Payee test')
     })
 })

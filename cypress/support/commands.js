@@ -130,7 +130,8 @@ Cypress.Commands.add('check_online_banking_tab_is_active',(tab_name,item)=>{
    cy.get('#tabs > ul > li > a').contains(item).should('exist').click()
 })
 
-Cypress.Commands.add('fill_out_info_for_pay_saved_payee',(payee,account,amount,date,description)=>{
+Cypress.Commands.add('fill_out_info_for_pay_saved_payee',(title,payee,account,amount,date,description)=>{
+   cy.get('#ui-tabs-1 > h2').contains(title).should('be.visible')
    cy.get('select#sp_payee').select(payee)
    cy.get('select#sp_account').select(account)
    cy.get('#sp_amount').type(amount)
@@ -145,6 +146,21 @@ Cypress.Commands.add('click_pay',()=>{
 Cypress.Commands.add('check_message_for_paying_successfully',(amount,payee)=>{
    cy.get('#alert_content > span').should('have.text','The payment was successfully submitted.')
    cy.get('#alert_content > span').should('have.attr','title',`$ `+amount+` payed to payee `+payee.toLowerCase())
+})
+Cypress.Commands.add('fill_out_info_for_add_new_payee',(title,payee_name,payee_address,account,payee_details)=>{
+   cy.get('#ui-tabs-2 > h2').contains(title).should('be.visible')
+   cy.get('#np_new_payee_name').type(payee_name)
+   cy.get('#np_new_payee_address').type(payee_address)
+   cy.get('#np_new_payee_account').type(account)
+   cy.get('#np_new_payee_details').type(payee_details)
+})
+
+Cypress.Commands.add('click_on_add',()=>{
+   cy.get('input[value="Add"]').click()
+})
+
+Cypress.Commands.add('check_message_for_adding_new_payee_successfully',(payee_name)=>{
+   cy.get('#alert_content').should('have.text',`The new payee `+payee_name+` was successfully created.`)
 })
 //
 //
