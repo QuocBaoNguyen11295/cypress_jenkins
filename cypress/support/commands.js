@@ -162,6 +162,27 @@ Cypress.Commands.add('click_on_add',()=>{
 Cypress.Commands.add('check_message_for_adding_new_payee_successfully',(payee_name)=>{
    cy.get('#alert_content').should('have.text',`The new payee `+payee_name+` was successfully created.`)
 })
+
+Cypress.Commands.add('fill_out_info_for_purchasing',(currency,value_exchange,amount,select_currency_to_exchange,conversion_amount)=>{
+   cy.get('#pc_currency').select(currency)
+   cy.get('#sp_sell_rate').should('have.text',value_exchange)
+   cy.get('#pc_amount').type(amount)
+   if(select_currency_to_exchange === 'U.S. dollar (USD)'){
+      cy.get('#pc_inDollars_true').click()
+   }else{
+      cy.get('#pc_inDollars_false').click()
+   }
+   cy.get('#pc_calculate_costs').click()
+   cy.get('#pc_conversion_amount').should('contain',conversion_amount)
+})
+
+Cypress.Commands.add('click_purchase',()=>{
+   cy.get('#purchase_cash').click()
+})
+
+Cypress.Commands.add('purchase_currency_message',()=>{
+   cy.get('#alert_content').should('have.text','Foreign currency cash was successfully purchased.')
+})
 //
 //
 // -- This is a child command --
