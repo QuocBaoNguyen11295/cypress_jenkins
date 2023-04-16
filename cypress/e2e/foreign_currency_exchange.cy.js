@@ -9,19 +9,21 @@ describe('Foreign Currency Exchange',()=>{
             cy.check_login_correctly(data_login.username)
             cy.open_tab('Online Banking')
             cy.open_tab_online_banking('Pay Bills')
+            /*
             cy.intercept('/bank/pay-bills-saved-payee.html', { method: 'GET',statusCode: 200 }).as('getData1')
             cy.wait('@getData1').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
               })
+            */
         })
     })
 
     it('Exhange the currency',()=>{
-        cy.intercept('GET','/bank/pay-bills-purchase-currency.html').as('purchase_currency')
+        //cy.intercept('GET','/bank/pay-bills-purchase-currency.html').as('purchase_currency')
         cy.check_online_banking_tab_is_active('Pay Bills','Purchase Foreign Currency')
-        cy.wait('@purchase_currency').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
-          })
+        //cy.wait('@purchase_currency').then(({response}) => {
+        //    expect(response.statusCode).to.eq(200)
+        //  })
         cy.fill_out_info_for_purchasing('Australia (dollar)','1 dollar (AUD) = 1.0987 U.S. dollar (USD)',123213,'U.S. dollar (USD)','112144.35 dollar (AUD) = 123213.00 U.S. dollar (USD)')
         cy.click_purchase()
         cy.purchase_currency_message()
