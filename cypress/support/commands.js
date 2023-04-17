@@ -183,6 +183,46 @@ Cypress.Commands.add('click_purchase',()=>{
 Cypress.Commands.add('purchase_currency_message',()=>{
    cy.get('#alert_content').should('have.text','Foreign currency cash was successfully purchased.')
 })
+
+Cypress.Commands.add('check_transfer_fund_tab_is_navigated',()=>{
+   cy.get('#transfer_funds_tab').should('have.attr','class','active')
+   cy.get('#transfer_funds_tab > a').should('have.text','Transfer Funds')
+   cy.get('form[action="/bank/transfer-funds-verify.html"] h2').should('have.text','Transfer Money & Make Payments')
+})
+
+Cypress.Commands.add('fill_out_info_for_transfer_fund',(from_account,to_account,amount,description)=>{
+   cy.get('select#tf_fromAccountId').contains(from_account).invoke('index').then((index)=>{
+      cy.get('select#tf_fromAccountId').select(index)
+   })
+   cy.get('select#tf_toAccountId').contains(to_account).invoke('index').then((index)=>{
+      cy.get('select#tf_toAccountId').select(index)
+   })
+   cy.get('#tf_amount').type(amount)
+   cy.get('#tf_description').type(description)
+})
+
+Cypress.Commands.add('click_continue',()=>{
+   cy.get('button').contains('Continue').click()
+})
+
+Cypress.Commands.add('check_fields_disabled',(from_account,to_account,amount,description)=>{
+   cy.get('#tf_fromAccountId').should('be.disabled').and('have.attr','value',from_account)
+   cy.get('#tf_toAccountId').should('be.disabled').and('have.attr','value',to_account)
+   cy.get('#tf_amount').should('be.disabled').and('have.attr','value',amount)
+   cy.get('#tf_description').should('be.disabled').and('have.attr','value',description)
+})
+
+Cypress.Commands.add('click_submit',()=>{
+   cy.get('button').contains('Submit').click()
+})
+
+Cypress.Commands.add('check_transaction_after_transferring',(from_account,to_account,amount)=>{
+   cy.get('h2').should('contain','Transfer Money & Make Payments - Confirm')
+   cy.get('.alert-success').should('contain','You successfully submitted your transaction.')
+   cy.get('.board-content > .row:nth-child(1) > .span3').should('contain',from_account)
+   cy.get('.board-content > .row:nth-child(2) > .span3').should('contain',to_account)
+   cy.get('.board-content > .row:nth-child(3) > .span3').should('contain',amount)
+})
 //
 //
 // -- This is a child command --
