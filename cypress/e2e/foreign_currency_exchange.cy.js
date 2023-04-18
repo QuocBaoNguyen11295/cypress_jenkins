@@ -9,12 +9,6 @@ describe('Foreign Currency Exchange',()=>{
             cy.check_login_correctly(data_login.username)
             cy.open_tab('Online Banking')
             cy.open_tab_online_banking('Pay Bills')
-            /*
-            cy.intercept('/bank/pay-bills-saved-payee.html', { method: 'GET',statusCode: 200 }).as('getData1')
-            cy.wait('@getData1').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-              })
-            */
         })
     })
 

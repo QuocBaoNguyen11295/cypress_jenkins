@@ -223,6 +223,33 @@ Cypress.Commands.add('check_transaction_after_transferring',(from_account,to_acc
    cy.get('.board-content > .row:nth-child(2) > .span3').should('contain',to_account)
    cy.get('.board-content > .row:nth-child(3) > .span3').should('contain',amount)
 })
+
+Cypress.Commands.add('check_account_activity_page',()=>{
+   cy.get('#account_activity_tab').should('have.attr','class','active')
+})
+
+Cypress.Commands.add('click_find_transaction_tab',()=>{
+   cy.get('#tabs li > a').contains('Find Transactions').click()
+})
+
+Cypress.Commands.add('check_find_transaction_tab',()=>{
+   cy.get('#ui-tabs-2 h2').should('have.text','Find Transactions')
+})
+
+Cypress.Commands.add('fill_out_info_for_finding_transactions',(description,from_date,to_date,from_amount,to_amount,type)=>{
+   cy.get('#aa_description').type(description)
+   cy.get('select#aa_type').contains(type).invoke('index').then((index)=>{
+      cy.get('select#aa_type').select(index)
+   })
+})
+
+Cypress.Commands.add('click_find_to_find_transactions',()=>{
+   cy.get('button').contains('Find').click()
+})
+
+Cypress.Commands.add('check_no_results',()=>{
+   cy.get('#filtered_transactions_for_account > div').should('contain','No results.')
+})
 //
 //
 // -- This is a child command --
